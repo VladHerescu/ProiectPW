@@ -1,0 +1,10 @@
+<div class="message-area">
+  <ul>
+    <li *ngFor="let msg of messageQueue" [ngClass]="{'text-left' : msg.fromSite,'text-right' : !msg.fromSite}">{{msg.text}}</li>
+  </ul>
+</div>
+<p>Press enter to send</p>
+<hr class="mt-0">
+<div class="texting-area">
+  <input #messageInput type="textarea" style="width: 90%; height: 90%;" (keyup)="sendMessage($event)">
+</div>

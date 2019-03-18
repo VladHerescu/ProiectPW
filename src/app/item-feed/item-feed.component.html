@@ -1,0 +1,149 @@
+<div class="container item-feed-navigation">
+  <!--Navbar-->
+  <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo">
+
+    <!-- Navbar brand -->
+    <mdb-navbar-brand><a class="navbar-brand" (click)="chatModal.show()">Chat with us</a></mdb-navbar-brand>
+
+    <!-- Collapsible content -->
+    <links>
+      <!-- Links -->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link waves-light" mdbWavesEffect
+             mdbPopoverHeader="Sorting options" placement="bottom"
+             [mdbPopover]="sortOptions">
+            Sort items
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <ng-template #sortOptions>
+          <div>
+            <label for="nameSortOrder">Select by name sort order</label>
+            <select #nameOrder id="nameSortOrder" class="browser-default custom-select">
+              <option selected>No name order</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+        </ng-template>
+        <li class="nav-item">
+          <a class="nav-link waves-light" (click)="cartModal.show()" mdbWavesEffect>Your cart
+            <mdb-badge pill="true" color="pink">
+              {{itemsInBag.length}}
+            </mdb-badge></a>
+        </li>
+        <!-- Dropdown -->
+        <li class="nav-item dropdown" dropdown>
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+            Basic dropdown<span class="caret"></span></a>
+          <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Action</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Another action</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Something else here</a>
+            <div class="divider dropdown-divider"></div>
+            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Separated link</a>
+          </div>
+        </li>
+
+      </ul>
+      <!-- Links -->
+
+      <!-- Search form -->
+      <form class="form-inline waves-light" mdbWavesEffect>
+        <div class="md-form my-0">
+          <input class="form-control mr-sm-2" type="text" (keyup)="filterByName($event)" placeholder="Search by name">
+        </div>
+      </form>
+    </links>
+    <!-- Collapsible content -->
+
+  </mdb-navbar>
+  <!--/.Navbar-->
+</div>
+<div class="rgba-black-light flex-center">
+  <div class="container text-center white-text">
+    <div class="card-columns">
+      <div class="card" style="position: inherit" *ngFor="let item of showedItems">
+        <app-item (emittedValue)="addOrRemoveItemFromCart($event)" [item]="item"></app-item>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--CHAT MODAL-->
+
+<div mdbModal #chatModal="mdbModal" class="modal fade right" id="frameModalTop" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+
+  <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-danger" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading">
+          <strong>Chat with us</strong>
+        </p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="chatModal.hide()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+    <app-chat></app-chat>
+    </div>
+    <!--/.Content-->
+  </div>
+
+</div>
+
+<!--CART MODAL-->
+
+<div mdbModal #cartModal="mdbModal" class="modal fade" id="frameModalCart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Your cart</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cartModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <!--Body-->
+      <div class="modal-body">
+
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Product name</th>
+            <th>Price</th>
+            <th>Remove</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let cartItem of itemsInBag">
+            <th scope="row">{{itemsInBag.indexOf(cartItem)}}</th>
+            <td>{{cartItem.name}} <img src="{{cartItem.src}}" class="cartItem-preview-image"></td>
+            <td>{{cartItem.value}}$</td>
+            <td>
+              <a (click)="removeItemFromCart(cartItem)">
+                <i class="fas fa-times"></i>
+              </a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      <div class="text-right">
+        <p>Total is <strong>{{totalCartValue}}$</strong></p>
+      </div>
+      </div>
+      <!--Footer-->
+      <div class="modal-footer">
+        <button type="button" mdbBtn color="primary" outline="true" class="waves-light" mdbWavesEffect data-dismiss="modal" (click)="clearAllCart()">Clear All!</button>
+        <button mdbBtn color="primary" class="waves-light" mdbWavesEffect>Checkout</button>
+      </div>
+    </div>
+  </div>
+</div>

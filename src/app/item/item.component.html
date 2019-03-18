@@ -1,0 +1,35 @@
+<!-- Card -->
+<mdb-card>
+  <div class="view rgba-white-slight waves-light" mdbWavesEffect>
+    <!-- Card img -->
+    <!--<mdb-card-img src="{{item.src}}" class="item-image" alt="Card image cap"></mdb-card-img>-->
+    <img src="{{item.src}}" alt="Card image cap" class="item-image">
+    <a>
+      <div class="mask"></div>
+    </a>
+  </div>
+  <!--Card content-->
+  <mdb-card-body>
+    <!--Title-->
+    <mdb-card-title>
+      <h4 style="color: black;">{{item.name}}</h4>
+    </mdb-card-title>
+
+    <!--Text-->
+    <mdb-card-text>
+      {{item.description}}
+    </mdb-card-text>
+
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <strong style="color: black; margin-top: 4px">{{item.value}} $</strong>
+        </div>
+        <div class="col">
+          <a mdbBtn color="primary" (click)="addToCart()" mdbWavesEffect>Buy it!</a>
+        </div>
+      </div>
+    </div>
+  </mdb-card-body>
+</mdb-card>
+<!-- Card -->

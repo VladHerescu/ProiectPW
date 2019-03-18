@@ -1,0 +1,41 @@
+<div class="container admin-dashboard-container" style="background: lightgray">
+  <h2>
+    This is the admin's dashboard
+  </h2>
+  <div class="text-center">
+    <div class="text-left">
+      <h3>Upload an item into the store</h3>
+    </div>
+    <div>
+      <p>First, let's add what item you want to upload</p>
+      <input
+        style="display: none"
+        type="file" (change)="onFileChanged($event)"
+        #fileInput>
+      <button type="button" class="mediaInput-file" (click)="fileInput.click()" mdbBtn color="info" mdbWavesEffect>Select the file</button>
+      <div style="display: inline-block;" *ngIf="fileLoaded">
+        <img id="previewImage" class="preview-image" [src]="imageSrc || 'https://www.instantoptions.com/images/nophotoyet.gif'">
+      </div>
+      <!--<hr class="my-4">-->
+      <div class="container">
+        <br>
+        <label for="nameInput">Product name:</label>
+        <input type="text" id="nameInput" [(ngModel)]="uploadedItem.name">
+        <br>
+        <label for="priceInput" style="margin-top: 5px; margin-bottom: 5px">Price:</label>
+        <input type="number" id="priceInput" [(ngModel)]="uploadedItem.value">
+        <p>Please provide a description of this item: </p>
+        <div>
+          <textarea id="formDescription" [ngModel]="uploadedItem.description"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="text-left">
+      <h3>Admin's heatmap</h3>
+    </div>
+    <div class="text-left">
+      <h3>Admin's probability funcction</h3>
+    </div>
+  </div>
+
+</div>
