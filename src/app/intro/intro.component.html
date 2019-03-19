@@ -9,16 +9,16 @@
           <a class="nav-link">Profile</a>
         </li>
         <li *ngIf="!isLoggedInAsAdmin() && !isLoggedInAsUser()" class="nav-item waves-light" mdbWavesEffect>
-          <a class="nav-link">Login</a>
-        </li>
-        <li *ngIf="!isLoggedInAsUser() && !isLoggedInAsAdmin()" class="nav-item waves-light" (click)="logInAdmin()" mdbWavesEffect>
-          <a class="nav-link">Login As Admin</a>
+          <a class="nav-link" (click)="loginAsUserModal.show()">Login</a>
         </li>
         <li *ngIf="!isLoggedInAsUser() && !isLoggedInAsAdmin()" class="nav-item waves-light" mdbWavesEffect>
-          <a class="nav-link">Register</a>
+          <a class="nav-link" (click)="loginAsAdminModal.show()">Login As Admin</a>
         </li>
-        <li *ngIf="isLoggedInAsUser() || isLoggedInAsAdmin()" class="nav-item waves-light" (click)="logout()" mdbWavesEffect>
-          <a class="nav-link">Log out</a>
+        <li *ngIf="!isLoggedInAsUser() && !isLoggedInAsAdmin()" class="nav-item waves-light" mdbWavesEffect>
+          <a class="nav-link" (click)="registeModal.show()">Register</a>
+        </li>
+        <li *ngIf="isLoggedInAsUser() || isLoggedInAsAdmin()" class="nav-item waves-light" mdbWavesEffect>
+          <a class="nav-link" (click)="logout()" >Log out</a>
         </li>
       </ul>
     </links>
@@ -34,3 +34,123 @@
   <app-admin-dashboard *ngIf="isLoggedInAsAdmin()"></app-admin-dashboard>
 </main>
 <!--Main Layout-->
+
+<!--LOGIN AS USER MODAL-->
+<div mdbModal #loginAsUserModal="mdbModal" class="modal fade" id="loginAsUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-info" role="document">
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <h4 class="modal-title">Login as user</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="loginAsUserModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <!--Body-->
+      <div class="modal-body">
+        <form class="text-center border border-light p-5">
+
+          <p class="h4 mb-4">Sign in for users</p>
+
+          <!-- Email -->
+          <input type="email" id="userLoginFormEmail" class="form-control mb-4" placeholder="E-mail">
+
+          <!-- Password -->
+          <input type="password" id="userLoginFormPassword" class="form-control mb-4" placeholder="Password">
+
+          <!-- Sign in button -->
+          <button mdbBtn color="info" block="true" class="my-4 waves-light" type="submit">Sign in</button>
+
+          <p>Not a member?
+            <a (click)="loginAsUserModal.hide(); registeModal.show()" class="text-default"> Register</a>
+          </p>
+        </form>
+        <!-- Default form login -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--LOGIN AS ADMIN MODAL-->
+<div mdbModal #loginAsAdminModal="mdbModal" class="modal fade" id="loginAsAdminModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-info" role="document">
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <h4 class="modal-title">Login as admin</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="loginAsAdminModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <!--Body-->
+      <div class="modal-body">
+
+        <div class="modal-body">
+          <form class="text-center border border-light p-5">
+
+            <p class="h4 mb-4">Sign in for admins</p>
+            <!-- Email -->
+            <input type="email" id="adminLoginFormEmail" class="form-control mb-4" placeholder="E-mail">
+            <!-- Password -->
+            <input type="password" id="adminLoginFormPassword" class="form-control mb-4" placeholder="Password">
+            <!-- Sign in button -->
+            <button mdbBtn color="info" block="true" class="my-4 waves-light" (click)="logInAdmin(); loginAsAdminModal.hide()" type="submit">Sign in</button>
+          </form>
+          <!-- Default form login -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--REGISTER MODAL-->
+<div mdbModal #registeModal="mdbModal" class="modal fade" id="registeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-info" role="document">
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <h4 class="modal-title">Register</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="registeModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="text-center border border-light p-5">
+
+          <p class="h4 mb-4">Sign up</p>
+
+          <div class="form-row mb-4">
+            <div class="col">
+              <input type="text" id="userRegisterFormFirstName" class="form-control" placeholder="First name">
+            </div>
+            <div class="col">
+              <input type="text" id="userRegisterFormLastName" class="form-control" placeholder="Last name">
+            </div>
+          </div>
+
+          <input type="email" id="userRegisterFormEmail" class="form-control mb-4" placeholder="E-mail">
+
+          <input type="password" id="userRegisterFormPassword" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
+          <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
+            At least 8 characters and 1 digit
+          </small>
+
+          <button mdbBtn color="info" block="true" class="my-4 waves-light" type="submit">Sign up</button>
+
+          <hr>
+
+          <!-- Terms of service -->
+          <p>By clicking
+            <em>Sign up</em> you agree to our
+            <a href="" target="_blank">terms of service</a> and
+            <a href="" target="_blank">terms of service</a>. </p>
+
+        </form>
+        <!-- Default form register -->
+      </div>
+    </div>
+  </div>
+</div>

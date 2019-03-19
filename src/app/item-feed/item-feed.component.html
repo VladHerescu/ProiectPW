@@ -77,7 +77,7 @@
   <div class="container text-center white-text">
     <div class="card-columns">
       <div class="card" style="position: inherit" *ngFor="let item of showedItems">
-        <app-item (emittedValue)="addOrRemoveItemFromCart($event)" [item]="item"></app-item>
+        <app-item (emittedValue)="addItemFromCart($event)" [item]="item"></app-item>
       </div>
     </div>
   </div>
@@ -136,10 +136,10 @@
           <tbody>
           <tr *ngFor="let cartItem of itemsInBag">
             <th scope="row">{{itemsInBag.indexOf(cartItem)}}</th>
-            <td>{{cartItem.name}} <img src="{{cartItem.src}}" class="cartItem-preview-image"></td>
-            <td>{{cartItem.value}}$</td>
+            <td>({{cartItem.qty}}) {{cartItem.item.name}} <img src="{{cartItem.item.src}}" class="cartItem-preview-image"></td>
+            <td>{{cartItem.item.value}}$</td>
             <td>
-              <a (click)="removeItemFromCart(cartItem)">
+              <a (click)="removeItemFromCart(cartItem.item)">
                 <i class="fas fa-times"></i>
               </a>
             </td>

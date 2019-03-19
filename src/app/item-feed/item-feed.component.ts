@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Item} from '../objects/Item';
 import { ItemsMock} from '../mocks/item_mocks';
+import {ItemInBag} from '../objects/ItemInBag';
 
 @Component({
   selector: 'app-item-feed',
@@ -12,7 +13,7 @@ export class ItemFeedComponent implements OnInit {
   constructor() { }
   allItems: Item[] = ItemsMock;
   showedItems: Item[] = ItemsMock;
-  itemsInBag: Item[] = [];
+  itemsInBag: ItemInBag[] = [];
   totalCartValue: number = 0;
   ngOnInit() {
     if (sessionStorage.getItem("cart"))
@@ -20,23 +21,29 @@ export class ItemFeedComponent implements OnInit {
     this.totalCartValue = this.getTotalValue();
   }
 
-  addOrRemoveItemFromCart(item: Item): void {
-    if (this.itemsInBag.find(i => i.name == item.name))
-      this.itemsInBag = this.itemsInBag.filter(e => e.name !== item.name);
-    else
-      this.itemsInBag.push(item);
+  addItemFromCart(item: Item): void {
+    for (let i of this.itemsInBag) {
+      if (item.name == i.item.name) {
+        i.qty++;
+        sessionStorage.setItem("cart", JSON.stringify(this.itemsInBag));
+        this.totalCartValue = this.getTotalValue();
+        window.console.log(item);
+        return;
+      }
+    }
+    this.itemsInBag.push(new ItemInBag(item));
     sessionStorage.setItem("cart", JSON.stringify(this.itemsInBag));
     this.totalCartValue = this.getTotalValue();
     window.console.log(item);
   }
   getTotalValue(): number {
     return this.itemsInBag
-      .map(i => i.value)
+      .map(i => i.item.value * i.qty)
       .reduce((sum, current) => sum + current, 0);
   }
   removeItemFromCart(cartItem: Item): void {
-    window.console.log(event);
-    this.itemsInBag = this.itemsInBag.filter(item => item.name != cartItem.name);
+    // window.console.log(event);
+    this.itemsInBag = this.itemsInBag.filter(i => i.item.name != cartItem.name);
     this.totalCartValue = this.getTotalValue();
   }
   clearAllCart(): void {
