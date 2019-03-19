@@ -10,22 +10,34 @@
       <!-- Links -->
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link waves-light" mdbWavesEffect
+          <a class="nav-link waves-light" mdbWavesEffect #searchAndSortPopOver
              mdbPopoverHeader="Sorting options" placement="bottom"
              [mdbPopover]="sortOptions">
-            Sort items
+            Search and sort items
             <span class="sr-only">(current)</span>
           </a>
         </li>
         <ng-template #sortOptions>
-          <div>
-            <label for="nameSortOrder">Select by name sort order</label>
-            <select #nameOrder id="nameSortOrder" class="browser-default custom-select">
-              <option selected>No name order</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+          <div class="row p-2">
+            <label for="nameSortOrder" class="col mt-1">Select sorting method</label>
+            <select #sortingMethod id="nameSortOrder" class="browser-default custom-select col">
+              <option value="none">None</option>
+              <option value="nameAscending">Name ascending</option>
+              <option value="nameDescending">Name descending</option>
+              <option value="priceAscending">Price ascending</option>
+              <option value="priceDescending">Price descending</option>
             </select>
+          </div>
+          <div class="row p-2">
+            <label for="priceRangeFrom" class="col mt-1">Select by name sort order</label>
+            <div class="col mt-1">
+              <input mdbInput #priceRangeFrom class="input-price-range" type="number" id="priceRangeFrom" placeholder="From"><span> to <span>
+              <input mdbInput #priceRangeTo class="input-price-range" type="number" id="priceRangeTo" placeholder="To"></span></span>
+            </div>
+          </div>
+          <div class="row pt-4">
+            <a mdbBtn color="primary" class="col text-center" (click)="searchAndSortPopOver.click(); searchAndSort(sortingMethod,priceRangeFrom,priceRangeTo)" mdbWavesEffect>Search!</a>
+            <a mdbBtn color="danger" class="col" (click)="searchAndSortPopOver.click(); clearAllSearchParams()" mdbWavesEffect>Clear the searches!</a>
           </div>
         </ng-template>
         <li class="nav-item">
@@ -46,7 +58,6 @@
             <a class="dropdown-item waves-light" mdbWavesEffect href="#">Separated link</a>
           </div>
         </li>
-
       </ul>
       <!-- Links -->
 

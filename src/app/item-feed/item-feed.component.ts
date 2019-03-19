@@ -41,6 +41,7 @@ export class ItemFeedComponent implements OnInit {
   }
   clearAllCart(): void {
     this.itemsInBag = [];
+    sessionStorage.setItem("cart", JSON.stringify(this.itemsInBag));
     this.totalCartValue = 0;
   }
 
@@ -48,11 +49,51 @@ export class ItemFeedComponent implements OnInit {
     // window.console.log(event);
     this.showedItems = this.allItems.filter(item => item.name.toLocaleLowerCase().indexOf(event.target.value.toLocaleLowerCase()) > -1);
   }
-  sortByName(): void {
-    this.showedItems = this.showedItems.sort((a, b) => a.name.localeCompare(b.name));
+  searchAndSort(sortingMethodElement: any, priceRangeFromElement: any, priceRangeToElement: any): void {
+    const sortingMethod = sortingMethodElement.options[sortingMethodElement.selectedIndex].value;
+    const priceRangeFrom = priceRangeFromElement.value;
+    const priceRangeTo = priceRangeToElement.value;
+    window.console.log(sortingMethod + " " + priceRangeFrom + " " + priceRangeTo);
+    this.filterByPrice(priceRangeFrom,priceRangeTo);
+    switch (sortingMethod) {
+      case "nameAscending": {
+        this.sortByName(true);
+        break;
+      }
+      case "nameDescnding": {
+        this.sortByName(false);
+        break;
+      }
+      case "priceAscending": {
+        this.sortByValue(true);
+        break;
+      }
+      case "priceDescending": {
+        this.sortByValue(false);
+        break;
+      }
+      default: {
+        break;
+      }
+    }
   }
-  sortByValue(): void {
-
+  sortByName(ascending: boolean): void {
+    if (ascending)
+      this.showedItems = this.showedItems.sort((a, b) => a.name.localeCompare(b.name));
+    else
+      this.showedItems = this.showedItems.sort((a, b) => b.name.localeCompare(a.name));
   }
-
+  sortByValue(ascending: boolean): void {
+    if (ascending)
+      this.showedItems = this.showedItems.sort((a, b) => a.value - b.value);
+    else
+      this.showedItems = this.showedItems.sort((a, b) => b.value - a.value);
+  }
+  filterByPrice(lower: string, upper: string) {
+    this.showedItems = this.showedItems
+      .filter(item => (((lower != "")?item.value > +lower: true) && ((upper != "")?item.value < +upper:true)));
+  }
+  clearAllSearchParams(): void {
+    this.showedItems = this.allItems;
+  }
 }

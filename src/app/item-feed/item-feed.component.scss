@@ -19,3 +19,11 @@
   max-height: 50px;
   max-width: 50px;
 }
+
+::ng-deep mdb-popover-container {
+  min-width: 400px;
+}
+.input-price-range {
+  width: 55px;
+  height: 25px;
+}
