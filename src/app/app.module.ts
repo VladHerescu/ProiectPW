@@ -9,6 +9,11 @@ import { ItemComponent } from './item/item.component';
 import { ChatComponent } from './chat/chat.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import {FormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import { UploadItemComponent } from './upload-item/upload-item.component';
+import { AdminHeatmapComponent } from './admin-heatmap/admin-heatmap.component';
+import { AdminProbabilityComponent } from './admin-probability/admin-probability.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -17,12 +22,17 @@ import {FormsModule} from '@angular/forms';
     ItemFeedComponent,
     ItemComponent,
     ChatComponent,
-    AdminDashboardComponent
+    AdminDashboardComponent,
+    UploadItemComponent,
+    AdminHeatmapComponent,
+    AdminProbabilityComponent
   ],
   imports: [
     BrowserModule,
     MDBBootstrapModule.forRoot(),
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-intro',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IntroComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
@@ -20,8 +21,10 @@ export class IntroComponent implements OnInit {
   }
   logInAdmin(): void {
     sessionStorage.setItem("loggenIn","admin");
+    this.router.navigate(["/admin-upload"]);
   }
   logout(): void {
+    this.router.navigate([""]);
     sessionStorage.setItem("loggenIn", "");
     location.reload();
   }
