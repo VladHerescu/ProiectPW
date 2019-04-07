@@ -136,8 +136,8 @@
           <tbody>
           <tr *ngFor="let cartItem of itemsInBag">
             <th scope="row">{{itemsInBag.indexOf(cartItem)}}</th>
-            <td>({{cartItem.qty}}) {{cartItem.item.name}} <img src="{{cartItem.item.src}}" class="cartItem-preview-image"></td>
-            <td>{{cartItem.item.value}}$</td>
+            <td>({{cartItem.qty}}) {{cartItem.item.name}} <img src="{{cartItem.item.photo}}" class="cartItem-preview-image"></td>
+            <td>{{cartItem.item.price}}$</td>
             <td>
               <a (click)="removeItemFromCart(cartItem.item)">
                 <i class="fas fa-times"></i>
@@ -147,7 +147,7 @@
           </tbody>
         </table>
       <div class="text-right">
-        <p>Total is <strong>{{totalCartValue}}$</strong></p>
+        <p>Total is <strong>{{totalCartPrice}}$</strong></p>
       </div>
       </div>
       <!--Footer-->

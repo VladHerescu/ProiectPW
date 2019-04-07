@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
+import {UserService} from '../user.service';
+import {ModalDirective} from 'angular-bootstrap-md';
 
 @Component({
   selector: 'app-intro',
@@ -8,24 +10,74 @@ import {Router} from '@angular/router';
 })
 export class IntroComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  failedLogin : boolean = false;
+  usernameToDisplay: string = "";
+  @ViewChild('loginAsAdminModal') loginAdminModal: ModalDirective;
+  @ViewChild('loginAsUserModal') loginUserModal: ModalDirective;
+  @ViewChild('registerModal') registerModal: ModalDirective;
+  constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit() {
   }
 
   isLoggedInAsAdmin(): boolean {
-    return sessionStorage.getItem("loggenIn") == "admin";
+    return sessionStorage.getItem("loggedIn") == "admin";
   }
   isLoggedInAsUser(): boolean {
     return sessionStorage.getItem("loggedIn") == "user";
   }
-  logInAdmin(): void {
-    sessionStorage.setItem("loggenIn","admin");
-    this.router.navigate(["/admin-upload"]);
+  logInAdmin(username: any, password: any): void {
+    window.console.log(username.value,password.value);
+    this.userService.logInAsAdmin(username.value,password.value).subscribe(
+      res => {
+        sessionStorage.setItem("loggedIn","admin");
+        this.closeAdminModal();
+        this.router.navigate(["/admin-upload"]);
+      },
+      err => {
+        this.failedLogin = true;
+      }
+    );
+  }
+  logInUser(username: any, password: any): void {
+    window.console.log(username.value,password.value);
+    this.userService.logInAsUser(username.value,password.value).subscribe(
+      res => {
+        sessionStorage.setItem("loggedIn","user");
+        this.usernameToDisplay = username.value;
+        this.closeUserModal();
+      },
+      err => {
+        this.failedLogin = true;
+      }
+    );
+  }
+  registerUser(username: any, password: any): void {
+    window.console.log(username.value,password.value);
+    this.userService.registerUser(username.value,password.value).subscribe(
+      res => {
+        this.closeRegisterModal();
+      },
+      err => {
+        this.failedLogin = true;
+      }
+    );
+  }
+  closeRegisterModal () {
+    this.registerModal.hide();
+    this.failedLogin = false;
+  }
+  closeAdminModal () {
+    this.loginAdminModal.hide();
+    this.failedLogin = false;
+  }
+  closeUserModal () {
+    this.loginUserModal.hide();
+    this.failedLogin = false;
   }
   logout(): void {
-    this.router.navigate([""]);
-    sessionStorage.setItem("loggenIn", "");
+    sessionStorage.setItem("loggedIn", "");
     location.reload();
+    location.pathname = "";
   }
 }

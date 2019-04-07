@@ -3,7 +3,7 @@
   <div class="view rgba-white-slight waves-light" mdbWavesEffect>
     <!-- Card img -->
     <!--<mdb-card-img src="{{item.src}}" class="item-image" alt="Card image cap"></mdb-card-img>-->
-    <img src="{{item.src}}" alt="Card image cap" class="item-image">
+    <img src="{{item.photo}}" alt="Card image cap" class="item-image">
     <a>
       <div class="mask"></div>
     </a>
@@ -23,7 +23,7 @@
     <div class="container">
       <div class="row">
         <div class="col">
-          <strong style="color: black; margin-top: 4px">{{item.value}} $</strong>
+          <strong style="color: black; margin-top: 4px">{{item.price}} $</strong>
         </div>
         <div class="col">
           <a mdbBtn color="primary" (click)="addToCart()" mdbWavesEffect>Buy it!</a>

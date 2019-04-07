@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Item} from '../objects/Item';
 import { ItemsMock} from '../mocks/item_mocks';
 import {ItemInBag} from '../objects/ItemInBag';
+import {ItemService} from '../item.service';
 
 @Component({
   selector: 'app-item-feed',
@@ -10,15 +11,20 @@ import {ItemInBag} from '../objects/ItemInBag';
 })
 export class ItemFeedComponent implements OnInit {
 
-  constructor() { }
-  allItems: Item[] = ItemsMock;
-  showedItems: Item[] = ItemsMock;
+  constructor(private itemService : ItemService) { }
+
+  allItems: Item[] = [];
+  showedItems: Item[] = [];
   itemsInBag: ItemInBag[] = [];
-  totalCartValue: number = 0;
+  totalCartPrice: number = 0;
   ngOnInit() {
+    this.itemService.getItems().subscribe( items => {
+      this.allItems = items;
+      this.showedItems = this.allItems;
+    });
     if (sessionStorage.getItem("cart"))
       this.itemsInBag = JSON.parse(sessionStorage.getItem("cart"));
-    this.totalCartValue = this.getTotalValue();
+    this.totalCartPrice = this.getTotalPrice();
   }
 
   addItemFromCart(item: Item): void {
@@ -26,30 +32,30 @@ export class ItemFeedComponent implements OnInit {
       if (item.name == i.item.name) {
         i.qty++;
         sessionStorage.setItem("cart", JSON.stringify(this.itemsInBag));
-        this.totalCartValue = this.getTotalValue();
+        this.totalCartPrice = this.getTotalPrice();
         window.console.log(item);
         return;
       }
     }
     this.itemsInBag.push(new ItemInBag(item));
     sessionStorage.setItem("cart", JSON.stringify(this.itemsInBag));
-    this.totalCartValue = this.getTotalValue();
+    this.totalCartPrice = this.getTotalPrice();
     window.console.log(item);
   }
-  getTotalValue(): number {
+  getTotalPrice(): number {
     return this.itemsInBag
-      .map(i => i.item.value * i.qty)
+      .map(i => i.item.price * i.qty)
       .reduce((sum, current) => sum + current, 0);
   }
   removeItemFromCart(cartItem: Item): void {
     // window.console.log(event);
     this.itemsInBag = this.itemsInBag.filter(i => i.item.name != cartItem.name);
-    this.totalCartValue = this.getTotalValue();
+    this.totalCartPrice = this.getTotalPrice();
   }
   clearAllCart(): void {
     this.itemsInBag = [];
     sessionStorage.setItem("cart", JSON.stringify(this.itemsInBag));
-    this.totalCartValue = 0;
+    this.totalCartPrice = 0;
   }
 
   filterByName(event): void {
@@ -72,11 +78,11 @@ export class ItemFeedComponent implements OnInit {
         break;
       }
       case "priceAscending": {
-        this.sortByValue(true);
+        this.sortByPrice(true);
         break;
       }
       case "priceDescending": {
-        this.sortByValue(false);
+        this.sortByPrice(false);
         break;
       }
       default: {
@@ -90,15 +96,15 @@ export class ItemFeedComponent implements OnInit {
     else
       this.showedItems = this.showedItems.sort((a, b) => b.name.localeCompare(a.name));
   }
-  sortByValue(ascending: boolean): void {
+  sortByPrice(ascending: boolean): void {
     if (ascending)
-      this.showedItems = this.showedItems.sort((a, b) => a.value - b.value);
+      this.showedItems = this.showedItems.sort((a, b) => a.price - b.price);
     else
-      this.showedItems = this.showedItems.sort((a, b) => b.value - a.value);
+      this.showedItems = this.showedItems.sort((a, b) => b.price - a.price);
   }
   filterByPrice(lower: string, upper: string) {
     this.showedItems = this.showedItems
-      .filter(item => (((lower != "")?item.value > +lower: true) && ((upper != "")?item.value < +upper:true)));
+      .filter(item => (((lower != "")?item.price > +lower: true) && ((upper != "")?item.price < +upper:true)));
   }
   clearAllSearchParams(): void {
     this.showedItems = this.allItems;

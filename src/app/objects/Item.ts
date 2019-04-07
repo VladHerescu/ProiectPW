@@ -1,6 +1,7 @@
 export class Item {
+  id: number;
   name: string;
-  value: number;
+  price: number;
   description: string;
-  src: string;
+  photo: string;
 }

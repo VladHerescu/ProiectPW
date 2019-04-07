@@ -6,7 +6,7 @@
     <links>
       <ul class="navbar-nav mr-auto">
         <li *ngIf="isLoggedInAsUser()" class="nav-item waves-light" mdbWavesEffect>
-          <a class="nav-link">Profile</a>
+          <p class="nav-link">Welcome {{usernameToDisplay}}</p>
         </li>
         <li *ngIf="!isLoggedInAsAdmin() && !isLoggedInAsUser()" class="nav-item waves-light" mdbWavesEffect>
           <a class="nav-link" (click)="loginAsUserModal.show()">Login</a>
@@ -15,7 +15,7 @@
           <a class="nav-link" (click)="loginAsAdminModal.show()">Login As Admin</a>
         </li>
         <li *ngIf="!isLoggedInAsUser() && !isLoggedInAsAdmin()" class="nav-item waves-light" mdbWavesEffect>
-          <a class="nav-link" (click)="registeModal.show()">Register</a>
+          <a class="nav-link" (click)="registerModal.show()">Register</a>
         </li>
         <li *ngIf="isLoggedInAsUser() || isLoggedInAsAdmin()" class="nav-item waves-light" mdbWavesEffect>
           <a class="nav-link" (click)="logout()" >Log out</a>
@@ -43,7 +43,7 @@
       <!--Header-->
       <div class="modal-header">
         <h4 class="modal-title">Login as user</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="loginAsUserModal.hide()">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeUserModal()">
           <span aria-hidden="true">×</span>
         </button>
       </div>
@@ -54,13 +54,13 @@
           <p class="h4 mb-4">Sign in for users</p>
 
           <!-- Email -->
-          <input type="email" id="userLoginFormEmail" class="form-control mb-4" placeholder="E-mail">
+          <input type="email" id="userLoginFormEmail" class="form-control mb-4" placeholder="E-mail" #usernameUser>
 
           <!-- Password -->
-          <input type="password" id="userLoginFormPassword" class="form-control mb-4" placeholder="Password">
-
+          <input type="password" id="userLoginFormPassword" class="form-control mb-4" placeholder="Password" #passwordUser>
+          <h5 *ngIf="failedLogin"><mdb-badge color="red">Email sau parola gresite</mdb-badge></h5>
           <!-- Sign in button -->
-          <button mdbBtn color="info" block="true" class="my-4 waves-light" type="submit">Sign in</button>
+          <button mdbBtn color="info" block="true" class="my-4 waves-light" (click)="logInUser(usernameUser,passwordUser)" type="submit">Sign in</button>
 
           <p>Not a member?
             <a (click)="loginAsUserModal.hide(); registeModal.show()" class="text-default"> Register</a>
@@ -80,7 +80,7 @@
       <!--Header-->
       <div class="modal-header">
         <h4 class="modal-title">Login as admin</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="loginAsAdminModal.hide()">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeAdminModal()">
           <span aria-hidden="true">×</span>
         </button>
       </div>
@@ -92,11 +92,12 @@
 
             <p class="h4 mb-4">Sign in for admins</p>
             <!-- Email -->
-            <input type="email" id="adminLoginFormEmail" class="form-control mb-4" placeholder="E-mail">
+            <input type="email" id="adminLoginFormEmail" class="form-control mb-4" placeholder="E-mail" #username>
             <!-- Password -->
-            <input type="password" id="adminLoginFormPassword" class="form-control mb-4" placeholder="Password">
+            <input type="password" id="adminLoginFormPassword" class="form-control mb-4" placeholder="Password" #password>
             <!-- Sign in button -->
-            <button mdbBtn color="info" block="true" class="my-4 waves-light" (click)="logInAdmin(); loginAsAdminModal.hide()" type="submit">Sign in</button>
+            <h5 *ngIf="failedLogin"><mdb-badge color="red">Email sau parola gresite</mdb-badge></h5>
+            <button mdbBtn color="info" block="true" class="my-4 waves-light" (click)="logInAdmin(username, password)" type="submit">Sign in</button>
           </form>
           <!-- Default form login -->
         </div>
@@ -106,14 +107,14 @@
 </div>
 
 <!--REGISTER MODAL-->
-<div mdbModal #registeModal="mdbModal" class="modal fade" id="registeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div mdbModal #registerModal="mdbModal" class="modal fade" id="registeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
   <div class="modal-dialog modal-notify modal-info" role="document">
     <div class="modal-content">
       <!--Header-->
       <div class="modal-header">
         <h4 class="modal-title">Register</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="registeModal.hide()">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeRegisterModal()">
           <span aria-hidden="true">×</span>
         </button>
       </div>
@@ -131,14 +132,15 @@
             </div>
           </div>
 
-          <input type="email" id="userRegisterFormEmail" class="form-control mb-4" placeholder="E-mail">
+          <input type="email" id="userRegisterFormEmail" class="form-control mb-4" placeholder="E-mail" #registerUsername>
 
-          <input type="password" id="userRegisterFormPassword" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
+          <input type="password" id="userRegisterFormPassword" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock" #registerPassword>
           <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
             At least 8 characters and 1 digit
           </small>
+          <h5 *ngIf="failedLogin"><mdb-badge color="red">Eroare la crearea contului</mdb-badge></h5>
 
-          <button mdbBtn color="info" block="true" class="my-4 waves-light" type="submit">Sign up</button>
+          <button mdbBtn color="info" block="true" class="my-4 waves-light" (click)="registerUser(registerUsername,registerPassword)" type="submit">Sign up</button>
 
           <hr>
 
