@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Item} from '../objects/Item';
-import { ItemsMock} from '../mocks/item_mocks';
 import {ItemInBag} from '../objects/ItemInBag';
 import {ItemService} from '../item.service';
 
@@ -14,6 +13,7 @@ export class ItemFeedComponent implements OnInit {
   constructor(private itemService : ItemService) { }
 
   allItems: Item[] = [];
+  role: string = "user";
   showedItems: Item[] = [];
   itemsInBag: ItemInBag[] = [];
   totalCartPrice: number = 0;

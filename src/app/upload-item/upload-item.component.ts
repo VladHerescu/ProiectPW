@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Item} from '../objects/Item';
+import {ItemService} from '../item.service';
 
 @Component({
   selector: 'app-upload-item',
@@ -13,7 +14,7 @@ export class UploadItemComponent implements OnInit {
   uploadedItem: Item = new Item();
   imageSrc: string | ArrayBuffer;
 
-  constructor() { }
+  constructor(private itemService: ItemService) { }
 
   ngOnInit() {
   }
@@ -32,7 +33,17 @@ export class UploadItemComponent implements OnInit {
     this.imageSrc = null;
     this.uploadMedia = null;
   }
-
+  uploadPost() {
+    window.console.log(this.uploadedItem);
+    this.uploadedItem.id = 0;
+    this.uploadedItem.photo = "";
+    this.itemService.uploadFile(this.uploadedItem,this.uploadMedia).subscribe(
+      (res) => {
+        window.console.log("success");
+        this.clearUploadItem();
+      }
+    );
+  }
   isOnDesktop(): boolean {
     if (innerWidth < 450) {
       return true;

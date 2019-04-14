@@ -24,6 +24,9 @@
             Probability
           </a>
         </li>
+        <li class="nav-item" [ngClass]="{'active': getLocationPath().indexOf('admin-probability') > -1}">
+          <a class="navbar-brand" (click)="chatModal.show()">Chat with us</a>
+        </li>
       </ul>
       <!-- Links -->
     </links>
@@ -33,3 +36,26 @@
   <!--/.Navbar-->
 </div>
 <router-outlet></router-outlet>
+
+<div mdbModal #chatModal="mdbModal" class="modal fade right" id="frameModalTop" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+
+  <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-danger" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading">
+          <strong>Chat with us</strong>
+        </p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="chatModal.hide()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+      <app-chat [role]="role"></app-chat>
+    </div>
+    <!--/.Content-->
+  </div>
+
+</div>

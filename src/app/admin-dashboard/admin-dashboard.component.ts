@@ -8,7 +8,7 @@ import {Item} from '../objects/Item';
 })
 export class AdminDashboardComponent implements OnInit {
 
-
+  role: string = "admin";
   constructor() { }
 
   ngOnInit() {
