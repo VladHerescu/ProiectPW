@@ -1,0 +1,14 @@
+<canvas #canvas style="border: 1px solid #000; background-color: white"></canvas>
+<div class="row pt-2" style="background-color: antiquewhite; margin-bottom: 20px">
+  <p class="col" style="max-width: fit-content">Pick a color:</p>
+  <div class="col-2">
+    <a (click)="cx.strokeStyle='#000000'"><mdb-badge pill="true" class="col-1 color-pill" style="background-color: #000000"></mdb-badge></a>
+    <a (click)="cx.strokeStyle='#FF0000'"><mdb-badge pill="true" class="col-1 color-pill" style="background-color: #FF0000"></mdb-badge></a>
+    <a (click)="cx.strokeStyle='#00FF00'"><mdb-badge pill="true" class="col-1 color-pill" style="background-color: #00FF00"></mdb-badge></a>
+    <a (click)="cx.strokeStyle='#0000FF'"><mdb-badge pill="true" class="col-1 color-pill" style="background-color: #0000FF"></mdb-badge></a>
+    <a (click)="cx.strokeStyle='#FF00FF'"><mdb-badge pill="true" class="col-1 color-pill" style="background-color: #FF00FF"></mdb-badge></a>
+    <a (click)="cx.strokeStyle='#FFFF00'"><mdb-badge pill="true" class="col-1 color-pill" style="background-color: #FFFF00"></mdb-badge></a>
+  </div>
+  <button mdbBtn color="danger" class="waves-light col" style="max-width: fit-content" (click)="cx.clearRect(0,0,canvas.width,canvas.height)">Clear</button>
+
+</div>

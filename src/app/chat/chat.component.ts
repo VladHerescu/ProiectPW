@@ -17,6 +17,7 @@ export class ChatComponent implements OnInit {
     if (localStorage.getItem("chat") !== undefined && localStorage.getItem("chat") !== null && localStorage.getItem("chat") != "")
       this.messageQueue = JSON.parse(localStorage.getItem("chat"));
     window.addEventListener("storage",this.storageEventListener.bind(this));
+    window.console.log("hey");
   }
   private storageEventListener(event: StorageEvent) {
     this.messageQueue = JSON.parse(localStorage.getItem("chat"));

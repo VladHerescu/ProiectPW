@@ -1,6 +1,43 @@
 <div class="container admin-dashboard-container" style="background: lightgray">
-  <h2>
-    This is the admin's probability stuff
-  </h2>
+  <div class="text-center">
+    <div class="text-left">
+      <h3>See the probability of one button being clicked before another</h3>
+    </div>
+    <br>
+
+    <div class="row">
+      <div class="col">
+        <label for="firstButton"> Choose first button</label>
+        <select #firstButton id="firstButton" class="browser-default custom-select col">
+          <option value="loginUserBtn">Login</option>
+          <option value="loginAdminBtn">Login As Admin</option>
+          <option value="registerBtn">Register</option>
+          <option value="logoutBtn">Log out</option>
+          <option value="chatButton">Chat with us</option>
+          <option value="sortButton">Search and sort items</option>
+          <option value="searchByName">Search by name</option>
+        </select>
+      </div>
+      <div class="col">
+        <label for="secondButton"> Choose second button</label>
+        <select #secondButton id="secondButton" class="browser-default custom-select col">
+          <option value="loginUserBtn">Login</option>
+          <option value="loginAdminBtn">Login As Admin</option>
+          <option value="registerBtn">Register</option>
+          <option value="logoutBtn">Log out</option>
+          <option value="chatButton">Chat with us</option>
+          <option value="sortButton">Search and sort items</option>
+          <option value="searchByName">Search by name</option>
+        </select>
+      </div>
+    </div>
+    <button mdbBtn color="info" class="my-4 waves-light" (click)="getProbability(firstButton,secondButton)">Calculate</button>
+
+    <div style="padding-bottom: 45px">
+      <p id="percentage" #percentage aria-hidden="true"></p>
+      <p id="clarifications" #clarifications aria-hidden="true"></p>
+    </div>
+
+  </div>
 
 </div>

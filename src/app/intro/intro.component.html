@@ -9,16 +9,16 @@
           <p class="nav-link">Welcome {{usernameToDisplay}}</p>
         </li>
         <li *ngIf="!isLoggedInAsAdmin() && !isLoggedInAsUser()" class="nav-item waves-light" mdbWavesEffect>
-          <a class="nav-link" (click)="loginAsUserModal.show()">Login</a>
+          <a class="nav-link stats" id="loginUserBtn" (click)="loginAsUserModal.show()">Login</a>
         </li>
         <li *ngIf="!isLoggedInAsUser() && !isLoggedInAsAdmin()" class="nav-item waves-light" mdbWavesEffect>
-          <a class="nav-link" (click)="loginAsAdminModal.show()">Login As Admin</a>
+          <a class="nav-link stats" id="loginAdminBtn" (click)="loginAsAdminModal.show()">Login As Admin</a>
         </li>
         <li *ngIf="!isLoggedInAsUser() && !isLoggedInAsAdmin()" class="nav-item waves-light" mdbWavesEffect>
-          <a class="nav-link" (click)="registerModal.show()">Register</a>
+          <a class="nav-link stats" id="registerBtn" (click)="registerModal.show()">Register</a>
         </li>
         <li *ngIf="isLoggedInAsUser() || isLoggedInAsAdmin()" class="nav-item waves-light" mdbWavesEffect>
-          <a class="nav-link" (click)="logout()" >Log out</a>
+          <a class="nav-link stats" id="logoutBtn" (click)="logout()" >Log out</a>
         </li>
       </ul>
     </links>

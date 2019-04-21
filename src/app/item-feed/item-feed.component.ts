@@ -12,6 +12,7 @@ export class ItemFeedComponent implements OnInit {
 
   constructor(private itemService : ItemService) { }
 
+  showDraw = false;
   allItems: Item[] = [];
   role: string = "user";
   showedItems: Item[] = [];

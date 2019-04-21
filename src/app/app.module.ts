@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { AppComponent } from './app.component';
@@ -14,6 +14,8 @@ import { UploadItemComponent } from './upload-item/upload-item.component';
 import { AdminHeatmapComponent } from './admin-heatmap/admin-heatmap.component';
 import { AdminProbabilityComponent } from './admin-probability/admin-probability.component';
 import { AppRoutingModule } from './app-routing.module';
+import { CanvasComponent } from './canvas/canvas.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -25,16 +27,21 @@ import { AppRoutingModule } from './app-routing.module';
     AdminDashboardComponent,
     UploadItemComponent,
     AdminHeatmapComponent,
-    AdminProbabilityComponent
+    AdminProbabilityComponent,
+    CanvasComponent
   ],
   imports: [
     BrowserModule,
     MDBBootstrapModule.forRoot(),
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [
+    NO_ERRORS_SCHEMA
+  ]
 })
 export class AppModule { }

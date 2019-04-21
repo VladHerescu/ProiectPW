@@ -4,11 +4,64 @@
   <meta charset="utf-8">
   <title>PWeMAG</title>
   <base href="/">
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body class="bg">
+  <script>
+    $(document).ready(function () {
+      console.log("f u");
+      var allTimeStats = [];
+      if (localStorage.getItem("stats") === undefined || localStorage.getItem("stats") === null) {
+        localStorage.setItem("stats",JSON.stringify([]));
+      }
+      allTimeStats = JSON.parse(localStorage.getItem("stats"));
+      var session = [];
+      var clickedNr = 1;
+      var modified = false;
+      $(".stats").click(function () {
+        var element = $(this);
+        window.console.log(element[0].id);
+        var ok = 1;
+        for (var i = 0; i < session.length; i++) {
+          if (session[i].btnId === element[0].id) {
+            ok = 0;
+            break;
+          }
+        }
+        if (ok === 1) {
+          session.push({
+            "btnId": element[0].id,
+            "clickedNr": clickedNr
+          });
+        } else {
+          return;
+        }
+        clickedNr++;
+        if (modified) {
+          allTimeStats  = allTimeStats.slice(0, allTimeStats.length - 1);
+          allTimeStats.push(session);
+        } else {
+          allTimeStats.push(session);
+        }
+        modified = true;
+        localStorage.setItem("stats", JSON.stringify(allTimeStats));
+      });
+    })
+  </script>
+  <!--<script>-->
+    // $(document).ready(function () {
+    //   $(".card").hover(function () {
+    //     (this).css("background-color","black");
+    //   },
+    //   function () {
+    //     (this).css("background-color","white");
+    //   })
+    // });
+
+  <!--</script>-->
+</body>
   <app-root></app-root>
 </body>
 </html>
